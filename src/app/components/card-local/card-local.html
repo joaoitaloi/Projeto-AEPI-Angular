@@ -1,0 +1,39 @@
+<div class="card-local" id="card-local">
+  <div class="card-imagem">
+    <img [src]="local.imagem" [alt]="local.nome" />
+    <span class="categoria">{{ local.categoria }}</span>
+
+    <button class="favorito" [class.ativo]="local.favorito" (click)="alternarFavorito()">
+      @if (local.favorito) {
+        ♥
+      } @else {
+        ♡
+      }
+    </button>
+  </div>
+
+  <div class="card-conteudo">
+    <div class="card-titulo">
+      <h3>{{ local.nome }}</h3>
+
+      <div class="avaliacao">
+        <div class="estrelas">
+          @for (estrela of estrelas; track estrela) {
+            <span class="star" [style.--fill.%]="calcularPreenchimento(estrela)"> ★ </span>
+          }
+        </div>
+
+        <span>{{ local.avaliacao }}</span>
+      </div>
+    </div>
+
+    <p class="quantidade-avaliacoes">{{ local.quantidadeAvaliacoes }} avaliações</p>
+
+    <p class="endereco">♧ {{ local.endereco }}</p>
+
+    <div class="card-acoes">
+      <button class="btn-detalhes" (click)="abrirDetalhes()">Ver detalhes</button>
+      <button class="btn-rota" (click)="verRota()">Ver rota ↗</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,371 @@
+<main class="admin-container">
+  <header class="admin-header">
+    <div>
+      <h1>Painel Administrativo</h1>
+      <p>Gerencie os locais disponíveis no AEPI.</p>
+    </div>
+
+    <button class="btn-sair" (click)="sair()">Sair</button>
+  </header>
+
+  <section class="admin-conteudo">
+    <div class="titulo-locais">
+      <div>
+        <h2>Locais cadastrados</h2>
+        <p>Adicione, edite ou remova locais da plataforma.</p>
+      </div>
+
+      <button class="btn-adicionar" (click)="abrirFormulario()">+ Adicionar local</button>
+    </div>
+
+    @if (mensagem()) {
+      <div
+        class="mensagem-formulario"
+        [class.sucesso]="tipoMensagem() === 'sucesso'"
+        [class.erro]="tipoMensagem() === 'erro'"
+      >
+        {{ mensagem() }}
+      </div>
+    }
+
+    <div class="lista-admin">
+      @for (local of locais(); track local.id) {
+        <div class="local-admin">
+          <img class="imagem-local-admin" [src]="local.imagem" [alt]="local.nome" />
+
+          <div class="info-local-admin">
+            <strong>{{ local.nome }}</strong>
+            <span>{{ local.categoria }}</span>
+            <p>{{ local.endereco }}</p>
+          </div>
+
+          <div class="acoes-local-admin">
+            <button class="btn-editar" type="button" (click)="editarLocal(local)">Editar</button>
+
+            <button class="btn-excluir" type="button" (click)="removerLocal(local.id)">
+              Excluir
+            </button>
+          </div>
+        </div>
+
+        @if (local.avaliacoes.length > 0) {
+          <div class="avaliacoes-admin">
+            @for (avaliacao of local.avaliacoes; track $index) {
+              <div class="avaliacao-admin">
+                <div>
+                  <strong>{{ avaliacao.usuario }}</strong>
+                  <span>⭐ {{ avaliacao.nota }}</span>
+                  <p>{{ avaliacao.mensagem }}</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn-excluir-avaliacao"
+                  (click)="removerAvaliacao(local.id, $index)"
+                >
+                  Excluir
+                </button>
+              </div>
+            }
+          </div>
+        }
+      }
+    </div>
+
+    @if (mostrarFormulario) {
+      <div class="formulario-local">
+        <div class="formulario-header">
+          <h2>{{ idEditando !== null ? 'Editar local' : 'Adicionar local' }}</h2>
+          <button type="button" (click)="fecharFormulario()">×</button>
+        </div>
+
+        <p>
+          {{
+            idEditando !== null
+              ? 'Altere as informações do local.'
+              : 'Preencha as informações do novo local.'
+          }}
+        </p>
+
+        <form class="form-local" #formLocal="ngForm" (ngSubmit)="enviarFormulario(formLocal)">
+          <div class="campo">
+            <label for="nome">Nome</label>
+            <input
+              id="nome"
+              type="text"
+              placeholder="Nome do local"
+              name="nome"
+              [(ngModel)]="nome"
+              #nomeInput="ngModel"
+              required
+            />
+
+            @if (nomeInput.invalid && nomeInput.touched) {
+              <span class="erro-campo">Preencha o nome do local.</span>
+            }
+          </div>
+
+          <div class="campo">
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria" [(ngModel)]="categoria" required>
+              <option value="shopping">Shopping</option>
+              <option value="mercado">Mercado</option>
+              <option value="restaurante">Restaurante</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="endereco">Endereço</label>
+            <input
+              id="endereco"
+              type="text"
+              placeholder="Endereço do local"
+              name="endereco"
+              [(ngModel)]="endereco"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="imagem">Imagem</label>
+            <input
+              id="imagem"
+              type="file"
+              accept="image/*"
+              (change)="selecionarImagem($event)"
+              required
+            />
+
+            @if (imagem) {
+              <div class="preview-imagem">
+                <p>Prévia:</p>
+                <img
+                  [src]="imagem"
+                  alt="Prévia da imagem do local"
+                  style="width: 180px; height: 110px; object-fit: cover"
+                />
+              </div>
+            }
+          </div>
+
+          <div class="campo">
+            <label for="avaliacao">Avaliação</label>
+            <input
+              id="avaliacao"
+              type="number"
+              min="0"
+              max="5"
+              step="0.1"
+              placeholder="Ex: 4.5"
+              name="avaliacao"
+              [(ngModel)]="avaliacao"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="quantidadeAvaliacoes">Quantidade de avaliações</label>
+            <input
+              id="quantidadeAvaliacoes"
+              type="number"
+              min="0"
+              placeholder="Ex: 1500"
+              name="quantidadeAvaliacoes"
+              [(ngModel)]="quantidadeAvaliacoes"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="telefone">Telefone</label>
+            <input
+              id="telefone"
+              type="text"
+              placeholder="Ex: (71) 99999-9999"
+              name="telefone"
+              [(ngModel)]="telefone"
+              required
+            />
+          </div>
+
+          <div class="campo campo-largo">
+            <label for="site">Site</label>
+            <input
+              id="site"
+              type="url"
+              placeholder="https://exemplo.com.br"
+              name="site"
+              [(ngModel)]="site"
+              required
+            />
+          </div>
+
+          <div class="campo campo-largo">
+            <h3>Horários de funcionamento</h3>
+          </div>
+
+          <div class="campo">
+            <label for="domingo">Domingo</label>
+            <input
+              id="domingo"
+              type="text"
+              placeholder="Ex: 12:00 – 21:00 ou Fechado"
+              name="domingo"
+              [(ngModel)]="horarios.domingo"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="segunda">Segunda</label>
+            <input
+              id="segunda"
+              type="text"
+              placeholder="Ex: 09:00 – 22:00"
+              name="segunda"
+              [(ngModel)]="horarios.segunda"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="terca">Terça</label>
+            <input
+              id="terca"
+              type="text"
+              placeholder="Ex: 09:00 – 22:00"
+              name="terca"
+              [(ngModel)]="horarios.terca"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="quarta">Quarta</label>
+            <input
+              id="quarta"
+              type="text"
+              placeholder="Ex: 09:00 – 22:00"
+              name="quarta"
+              [(ngModel)]="horarios.quarta"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="quinta">Quinta</label>
+            <input
+              id="quinta"
+              type="text"
+              placeholder="Ex: 09:00 – 22:00"
+              name="quinta"
+              [(ngModel)]="horarios.quinta"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="sexta">Sexta</label>
+            <input
+              id="sexta"
+              type="text"
+              placeholder="Ex: 09:00 – 22:00"
+              name="sexta"
+              [(ngModel)]="horarios.sexta"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="sabado">Sábado</label>
+            <input
+              id="sabado"
+              type="text"
+              placeholder="Ex: 09:00 – 22:00"
+              name="sabado"
+              [(ngModel)]="horarios.sabado"
+              required
+            />
+          </div>
+
+          <div class="campo campo-largo">
+            <h3>Acessibilidade</h3>
+
+            <label>
+              <input
+                type="checkbox"
+                (change)="
+                  alterarAcessibilidade(
+                    $event,
+                    'Entrada com acessibilidade para pessoas em cadeira de rodas'
+                  )
+                "
+              />
+              Entrada com acessibilidade para pessoas em cadeira de rodas
+            </label>
+
+            <label>
+              <input
+                type="checkbox"
+                (change)="
+                  alterarAcessibilidade(
+                    $event,
+                    'Banheiro com acessibilidade para pessoas em cadeira de rodas'
+                  )
+                "
+              />
+              Banheiro com acessibilidade para pessoas em cadeira de rodas
+            </label>
+
+            <label>
+              <input
+                type="checkbox"
+                (change)="
+                  alterarAcessibilidade(
+                    $event,
+                    'Estacionamento com acessibilidade para pessoas em cadeira de rodas'
+                  )
+                "
+              />
+              Estacionamento com acessibilidade para pessoas em cadeira de rodas
+            </label>
+
+            <label>
+              <input
+                type="checkbox"
+                (change)="
+                  alterarAcessibilidade(
+                    $event,
+                    'Assento com acessibilidade para pessoas em cadeira de rodas'
+                  )
+                "
+              />
+              Assento com acessibilidade para pessoas em cadeira de rodas
+            </label>
+          </div>
+
+          <div class="campo campo-largo">
+            <button class="btn-salvar" type="submit">
+              {{ idEditando !== null ? 'Salvar alterações' : 'Cadastrar Local' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    }
+  </section>
+</main>
+
+@if (idParaExcluir !== null) {
+  <div class="fundo-confirmacao">
+    <div class="confirmacao">
+      <h2>Excluir local?</h2>
+      <p>Tem certeza que deseja excluir este local?</p>
+
+      <div class="acoes-confirmacao">
+        <button class="btn-cancelar" (click)="cancelarExclusao()">Cancelar</button>
+
+        <button class="btn-confirmar" (click)="confirmarExclusao()">Excluir</button>
+      </div>
+    </div>
+  </div>
+}

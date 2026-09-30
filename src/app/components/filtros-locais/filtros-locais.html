@@ -1,0 +1,26 @@
+<section class="explorar" id="explorar">
+  <div class="explorar-topo">
+    <div>
+      <h2>Explore os lugares</h2>
+      <p>Escolha uma categoria ou encontre um local específico.</p>
+    </div>
+    <span>{{ locais().length }} lugares encontrados</span>
+  </div>
+  <div class="filtros">
+    <button [class.ativo]="filtroCategoria() === 'todos'" (click)="filtrar('todos')">
+      Todos <span>{{ locais().length }}</span>
+    </button>
+    <button [class.ativo]="filtroCategoria() === 'shopping'" (click)="filtrar('shopping')">
+      Shoppings <span>{{ quantidadeShoppings }}</span>
+    </button>
+    <button [class.ativo]="filtroCategoria() === 'mercado'" (click)="filtrar('mercado')">
+      Mercados <span>{{ quantidadeMercados }}</span>
+    </button>
+    <button [class.ativo]="filtroCategoria() === 'restaurante'" (click)="filtrar('restaurante')">
+      Restaurantes <span>{{ quantidadeRestaurantes }}</span>
+    </button>
+    <button [class.ativo]="filtroCategoria() === 'favoritos'" (click)="filtrar('favoritos')">
+      ♡ Favoritos <span>{{ quantidadeFavoritos }}</span>
+    </button>
+  </div>
+</section>

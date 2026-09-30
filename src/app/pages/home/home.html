@@ -1,0 +1,11 @@
+<app-header></app-header>
+<app-hero></app-hero>
+<app-destaque></app-destaque>
+<app-pesquisa></app-pesquisa>
+<app-filtros-locais></app-filtros-locais>
+<app-locais (verDetalhes)="abrirDetalhes($event)"></app-locais>
+
+@if (localSelecionado) {
+  <app-detalhes-local [local]="localSelecionado" (fechar)="fecharDetalhes()"> </app-detalhes-local>
+}
+<app-footer></app-footer>

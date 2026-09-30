@@ -1,0 +1,43 @@
+.pesquisa {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  margin: -30px auto 0;
+  padding: 12px;
+  background-color: white;
+  border-radius: 15px;
+  position: relative;
+}
+
+.campo-pesquisa {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.campo-pesquisa span {
+  position: absolute;
+  left: 15px;
+  z-index: 1;
+}
+
+.campo-pesquisa input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.ordenacao {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  gap: 10px;
+}
+
+.ordenacao select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}

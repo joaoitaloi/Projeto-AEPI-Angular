@@ -1,0 +1,195 @@
+<div class="fundo-modal" (click)="fecharModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <button class="fechar" (click)="fecharModal()">×</button>
+
+    <div class="imagem-local">
+      <img [src]="local.imagem" [alt]="local.nome" />
+      <span class="categoria">{{ local.categoria }}</span>
+    </div>
+
+    <div class="conteudo-modal">
+      <div class="titulo-avaliacao">
+        <h2>{{ local.nome }}</h2>
+
+        <div class="avaliacao">
+          <div class="estrelas">
+            @for (estrela of estrelas; track estrela) {
+              <span class="star" [style.--fill.%]="calcularPreenchimento(estrela, localAtualizado().avaliacao)">
+                ★
+              </span>
+            }
+          </div>
+
+          <strong>{{ localAtualizado().avaliacao }}</strong>
+        </div>
+      </div>
+
+      <p class="quantidade-avaliacoes">{{ localAtualizado().quantidadeAvaliacoes }} avaliações</p>
+
+      <div class="informacoes">
+        <div class="informacoes-local">
+          <div class="informacao">
+            <strong>Endereço</strong>
+            <p>{{ local.endereco }}</p>
+          </div>
+
+          <div class="informacao">
+            <strong>Telefone</strong>
+            <p>{{ local.telefone }}</p>
+          </div>
+
+          <div class="informacao">
+            <strong>Site</strong>
+            <a [href]="local.site" target="_blank">Visitar site ↗</a>
+          </div>
+        </div>
+
+        <div class="horarios">
+          <strong>Horários de funcionamento</strong>
+
+          <p>
+            Domingo
+            <span>{{ local.horarios.domingo }}</span>
+          </p>
+
+          <p>
+            Segunda
+            <span>{{ local.horarios.segunda }}</span>
+          </p>
+
+          <p>
+            Terça
+            <span>{{ local.horarios.terca }}</span>
+          </p>
+
+          <p>
+            Quarta
+            <span>{{ local.horarios.quarta }}</span>
+          </p>
+
+          <p>
+            Quinta
+            <span>{{ local.horarios.quinta }}</span>
+          </p>
+
+          <p>
+            Sexta
+            <span>{{ local.horarios.sexta }}</span>
+          </p>
+
+          <p>
+            Sábado
+            <span>{{ local.horarios.sabado }}</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="acessibilidade">
+        <h3>Acessibilidade</h3>
+
+        <div class="lista-acessibilidade">
+          @for (item of local.acessibilidade; track item) {
+            <div class="item-acessibilidade">
+              <span>✓</span>
+              <p>{{ item }}</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="avaliacoes-usuarios">
+        <h3>Avaliações</h3>
+
+        <button type="button" class="btn-avaliar" (click)="abrirAvaliacao()">
+          Avaliar este local
+        </button>
+
+        @if (mostrarFormularioAvaliacao) {
+          <div class="form-avaliacao">
+            <div class="form-avaliacao-topo">
+              <h4>Avalie este local</h4>
+
+              <button type="button" class="btn-fechar-avaliacao" (click)="fecharAvaliacao()">
+                ×
+              </button>
+            </div>
+
+            <div class="campo-avaliacao">
+              <label>Sua nota</label>
+
+              <div class="estrelas-avaliacao">
+                @for (estrela of estrelas; track estrela) {
+                  <button
+                    type="button"
+                    (click)="selecionarNota(estrela)"
+                    [class.selecionada]="estrela <= notaAvaliacao"
+                  >
+                    ★
+                  </button>
+                }
+              </div>
+
+              <div class="campo-avaliacao">
+                <label>Seu nome</label>
+                <input type="text" placeholder="Digite seu nome" [(ngModel)]="nomeAvaliacao" />
+              </div>
+
+              <div class="campo-avaliacao">
+                <label>Comentário</label>
+                <textarea
+                  placeholder="Conte como foi sua experiência..."
+                  [(ngModel)]="comentarioAvaliacao"
+                ></textarea>
+              </div>
+
+              <div class="campo-avaliacao">
+                <label>Foto do local (opcional)</label>
+                <input type="file" accept="image/*" (change)="selecionarFotoAvaliacao($event)" />
+              </div>
+
+              <button type="button" class="btn-enviar-avaliacao" (click)="enviarAvaliacao()">
+                Enviar avaliação
+              </button>
+            </div>
+          </div>
+        }
+
+        @for (avaliacao of localAtualizado().avaliacoes; track $index) {
+          <div class="avaliacao-usuario">
+            <img [src]="avaliacao.foto" [alt]="avaliacao.usuario" />
+
+            <div>
+              <strong>{{ avaliacao.usuario }}</strong>
+
+              <div class="nota-usuario">
+                <div class="estrelas-usuario">
+                  @for (estrela of estrelas; track estrela) {
+                    <span [class.ativa]="estrela <= avaliacao.nota">★</span>
+                  }
+                </div>
+
+                <span>{{ avaliacao.nota }}</span>
+              </div>
+
+              <p>{{ avaliacao.mensagem }}</p>
+
+              <div class="fotos-avaliacao">
+                @for (foto of avaliacao.fotos; track foto) {
+                  @if (foto) {
+                    <img [src]="foto" alt="Foto da avaliação" (click)="abrirFoto(foto)" />
+                  }
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+  @if (fotoSelecionada) {
+    <div class="foto-ampliada" (click)="fecharFoto(); $event.stopPropagation()">
+      <button class="fechar-foto" (click)="fecharFoto(); $event.stopPropagation()">×</button>
+      <img [src]="fotoSelecionada" alt="Foto ampliada" (click)="$event.stopPropagation()" />
+    </div>
+  }
+</div>

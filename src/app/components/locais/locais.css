@@ -1,0 +1,10 @@
+.secao-locais {
+  width: 90%;
+  margin: 50px auto;
+}
+
+.lista-locais {
+  display: flex;
+  gap: 20px;
+}
+

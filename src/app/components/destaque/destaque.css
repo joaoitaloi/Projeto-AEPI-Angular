@@ -1,0 +1,30 @@
+.destaque {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #2463c7;
+  color: white;
+  padding: 50px;
+}
+
+.destaque-texto h1 {
+  font-size: 40px;
+}
+
+.destaque-icone {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.fundo {
+  width: 100%;
+}
+
+.lupa {
+  position: absolute;
+  width: 60px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,39 @@
+<section class="secao-locais">
+  @if (mostrarShoppings()) {
+    <h2>Shoppings</h2>
+    <div class="lista-locais">
+      @for (local of shoppings(); track local.id) {
+        <app-card-local [local]="local" (verDetalhes)="abrirDetalhes($event)" ></app-card-local>
+      }
+    </div>
+  }
+
+  @if (mostrarMercados()) {
+    <h2>Mercados</h2>
+    <div class="lista-locais">
+      @for (local of mercados(); track local.id) {
+        <app-card-local [local]="local" (verDetalhes)="abrirDetalhes($event)"></app-card-local>
+      }
+    </div>
+  }
+
+  @if (mostrarRestaurantes()) {
+    <h2>Restaurantes</h2>
+    <div class="lista-locais">
+      @for (local of restaurantes(); track local.id) {
+        <app-card-local [local]="local" (verDetalhes)="abrirDetalhes($event)" ></app-card-local>
+      }
+    </div>
+  }
+
+  @if (mostrarFavoritos()) {
+    <h2>Favoritos</h2>
+    <div class="lista-locais">
+      @for (local of favoritos(); track local.id) {
+        <app-card-local [local]="local" (verDetalhes)="abrirDetalhes($event)" ></app-card-local>
+      } @empty {
+        <p>Você ainda não adicionou nenhum local aos favoritos.</p>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,14 @@
+<section class="pesquisa">
+  <div class="campo-pesquisa">
+    <span>⌕</span>
+    <input (input)="pesquisar($event)" type="text" placeholder="Busque por nome ou avenida" />
+  </div>
+  <div class="ordenacao">
+    <label for="ordenar">Ordenar por</label>
+    <select id="ordenar" (change)="ordenar($event)">
+      <option value="original">Ordem original</option>
+      <option value="nome">Nome</option>
+      <option value="avaliacao">Avaliação</option>
+    </select>
+  </div>
+</section>
