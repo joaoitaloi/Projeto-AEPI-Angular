@@ -22,5 +22,8 @@
     <button [class.ativo]="filtroCategoria() === 'favoritos'" (click)="filtrar('favoritos')">
       ♡ Favoritos <span>{{ quantidadeFavoritos }}</span>
     </button>
+    <button class="btn-zona" (click)="zonaSeguraState.abrir()">
+      Zona Segura
+    </button>
   </div>
 </section>

@@ -1,5 +1,9 @@
-<app-header></app-header>
+<app-header (abrirSobre)="abrirPopupSobre()"></app-header>
+@if(mostrarSobre){
+  <app-popup-sobre (fechar)="fecharPopupSobre()"></app-popup-sobre>
+}
 <app-hero></app-hero>
+<app-zona-segura></app-zona-segura>
 <app-destaque></app-destaque>
 <app-pesquisa></app-pesquisa>
 <app-filtros-locais></app-filtros-locais>
@@ -8,4 +12,5 @@
 @if (localSelecionado) {
   <app-detalhes-local [local]="localSelecionado" (fechar)="fecharDetalhes()"> </app-detalhes-local>
 }
+<app-contatos></app-contatos>
 <app-footer></app-footer>

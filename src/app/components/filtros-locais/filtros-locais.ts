@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { LocalService } from '../../services/local';
+import { ZonaSeguraState } from '../../services/zona-segura-state';
 
 @Component({
   selector: 'app-filtros-locais',
@@ -8,6 +9,7 @@ import { LocalService } from '../../services/local';
   styleUrl: './filtros-locais.css',
 })
 export class FiltrosLocais {
+  zonaSeguraState = inject(ZonaSeguraState);
   private localService = inject(LocalService);
   locais = this.localService.locais;
   filtroCategoria = this.localService.filtroCategoria;

@@ -1,0 +1,53 @@
+<section class="contatos" id="secao-contatos">
+  <div class="contatos-info">
+    <span class="subtitulo">FALE CONOSCO</span>
+    <h2>Entre em contato</h2>
+
+    <p>
+      Tem alguma dúvida, sugestão ou conhece um local acessível? Envie uma mensagem para a equipe
+      AEPI.
+    </p>
+
+    <div class="info-item">
+      <strong>Inclusão que conecta.</strong>
+      <span>Ajude o AEPI a tornar a acessibilidade mais visível.</span>
+    </div>
+  </div>
+
+  <form class="form-contato" (ngSubmit)="enviarContato()">
+    <div class="campos-linha">
+      <div class="campo">
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" placeholder="Seu nome" name="nome" [(ngModel)]="nome" />
+      </div>
+
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="seuemail@exemplo.com"
+          name="email"
+          [(ngModel)]="email"
+        />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="mensagem">Mensagem</label>
+      <textarea
+        id="mensagem"
+        placeholder="Digite sua mensagem..."
+        name="mensagem"
+        [(ngModel)]="mensagem"
+      ></textarea>
+    </div>
+
+    <button type="submit">Enviar mensagem</button>
+    @if (mensagemStatus) {
+      <p class="mensagem-status" [class.erro]="tipoMensagem === 'erro'">
+        {{ mensagemStatus }}
+      </p>
+    }
+  </form>
+</section>

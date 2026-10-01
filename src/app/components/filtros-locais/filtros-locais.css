@@ -48,3 +48,8 @@
   border-color: #b9d0ff;
   color: #2463c7;
 }
+
+.filtros .btn-zona {
+  background-color: green;
+  color: #f5f7fb;
+}

@@ -1,0 +1,60 @@
+@if (zonaSeguraState.visivel()) {
+<div class="zona-segura-overlay">
+  <section class="zona-segura">
+    <div class="zona-segura__header">
+
+      <h2>Zona Segura 🛡️</h2>
+
+      <p>
+        Verifique se o local atual é recomendado para passeio em família com base
+        em ocorrências de assalto, morte e troca de tiros.
+      </p>
+    </div>
+
+    <button type="button" class="zona-segura__botao" (click)="verificarZonaSegura()" [disabled]="carregando">
+      {{ carregando ? 'Verificando localização...' : 'Verificar minha localização' }}
+    </button>
+
+    <button type="button" class="btn_fechar" (click)="zonaSeguraState.fechar()">
+      Fechar
+    </button>
+
+    @if (erro) {
+    <div class="zona-segura__erro">
+      {{ erro }}
+    </div>
+    }
+
+    @if (resultado) {
+    <div class="zona-segura__resultado" [class]="resultado.nivel">
+      <span class="zona-segura__nivel">
+        {{ resultado.titulo }}
+      </span>
+
+      <h3>{{ resultado.mensagem }}</h3>
+
+      <p>
+        Pontuação de risco:
+        <strong>{{ resultado.pontuacao }}</strong>
+      </p>
+
+      @if (resultado.zona) {
+      <p>
+        Zona identificada:
+        <strong>{{ resultado.zona.nome }}</strong>
+      </p>
+
+      <p>
+        Distância aproximada:
+        <strong>{{ resultado.distancia }} metros</strong>
+      </p>
+      } @else {
+      <p>
+        Nenhuma zona crítica cadastrada foi encontrada próxima da sua localização.
+      </p>
+      }
+    </div>
+    }
+  </section>
+</div>
+}

@@ -1,0 +1,120 @@
+.contatos {
+  max-width: 1200px;
+  margin: 70px auto;
+  padding: 45px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  background: #f8fafc;
+  border-radius: 18px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.subtitulo {
+  color: #55cc73;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.contatos-info h2 {
+  margin: 8px 0 15px;
+  color: #2463eb;
+  font-size: 32px;
+}
+
+.contatos-info p {
+  color: #000;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.info-item {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-item strong {
+  color: #2463eb;
+}
+
+.form-contato {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.campos-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.campo label {
+  font-weight: 600;
+}
+
+.campo input,
+.campo textarea {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  border-color: #2463eb;
+}
+
+.campo textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-contato button {
+  align-self: flex-start;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #2463eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form-contato button:hover {
+  background: #1d4ed8;
+}
+
+.mensagem-status {
+  margin: 0;
+  color: #15803d;
+  font-weight: 600;
+}
+
+.mensagem-status.erro {
+  color: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .contatos {
+    margin: 40px 20px;
+    padding: 30px 20px;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .campos-linha {
+    grid-template-columns: 1fr;
+  }
+}
